@@ -1,7 +1,7 @@
 import CardProfile from "./CardProfile";
 import { Login } from "./login";
-import MyQRCodes from "./MyQRCodes";
-import GenerateQrCode from "./GenerateQrCode";
 import EditQRCode from "./EditQRCode";
+import MyVCards from "./VCard/MyVCards";
+import GenerateVCard from "./VCard/GenerateVCard";
 
-export { Login, CardProfile, MyQRCodes, GenerateQrCode, EditQRCode };
+export { Login, CardProfile, MyVCards, GenerateVCard, EditQRCode };

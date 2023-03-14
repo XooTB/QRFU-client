@@ -1,6 +1,4 @@
-import React from "react";
-
-import { Refine, GitHubBanner } from "@pankod/refine-core";
+import { Refine } from "@pankod/refine-core";
 import {
   notificationProvider,
   RefineSnackbarProvider,
@@ -11,18 +9,12 @@ import {
 } from "@pankod/refine-mui";
 
 import dataProvider from "@pankod/refine-simple-rest";
-import { MuiInferencer } from "@pankod/refine-inferencer/mui";
 import routerProvider from "@pankod/refine-react-router-v6";
 import axios, { AxiosRequestConfig } from "axios";
 import { ColorModeContextProvider, authProvider } from "contexts";
 import { Title, Sider, Layout, Header } from "components/layout";
-import {
-  Login,
-  CardProfile,
-  MyQRCodes,
-  GenerateQrCode,
-  EditQRCode,
-} from "pages";
+import { Login, CardProfile, MyVCards, GenerateVCard } from "pages";
+import { RecentActorsOutlined } from "@mui/icons-material";
 
 const axiosInstance = axios.create();
 axiosInstance.interceptors.request.use((request: AxiosRequestConfig) => {
@@ -52,10 +44,10 @@ function App() {
             catchAll={<ErrorComponent />}
             resources={[
               {
-                name: "QR-Code",
-                list: MyQRCodes,
-                create: GenerateQrCode,
-                edit: EditQRCode,
+                name: "cards",
+                list: MyVCards,
+                create: GenerateVCard,
+                icon: <RecentActorsOutlined />,
               },
             ]}
             Title={Title}
