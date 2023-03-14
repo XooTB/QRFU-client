@@ -1,6 +1,6 @@
 import { CredentialResponse } from "interfaces/google";
 import { parseJwt } from "utils/parse-jwt";
-import { AuthProvider } from "@pankod/refine-core";
+import { LegacyAuthProvider as AuthProvider } from "@refinedev/core";
 import axios from "axios";
 
 export const authProvider: AuthProvider = {

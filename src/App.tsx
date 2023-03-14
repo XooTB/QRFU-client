@@ -1,15 +1,8 @@
-import { Refine } from "@pankod/refine-core";
-import {
-  notificationProvider,
-  RefineSnackbarProvider,
-  CssBaseline,
-  GlobalStyles,
-  ReadyPage,
-  ErrorComponent,
-} from "@pankod/refine-mui";
-
-import dataProvider from "@pankod/refine-simple-rest";
-import routerProvider from "@pankod/refine-react-router-v6";
+import { Refine } from "@refinedev/core";
+import { notificationProvider, RefineSnackbarProvider, ReadyPage, ErrorComponent } from "@refinedev/mui";
+import { CssBaseline, GlobalStyles } from "@mui/material";
+import dataProvider from "@refinedev/simple-rest";
+import routerProvider from "@refinedev/react-router-v6/legacy";
 import axios, { AxiosRequestConfig } from "axios";
 import { ColorModeContextProvider, authProvider } from "contexts";
 import { Title, Sider, Layout, Header } from "components/layout";
@@ -31,45 +24,43 @@ axiosInstance.interceptors.request.use((request: AxiosRequestConfig) => {
 });
 
 function App() {
-  return (
-    <>
-      <ColorModeContextProvider>
-        <CssBaseline />
-        <GlobalStyles styles={{ html: { WebkitFontSmoothing: "auto" } }} />
-        <RefineSnackbarProvider>
-          <Refine
-            dataProvider={dataProvider("https://api.fake-rest.refine.dev")}
-            notificationProvider={notificationProvider}
-            ReadyPage={ReadyPage}
-            catchAll={<ErrorComponent />}
-            resources={[
+  return <>
+    <ColorModeContextProvider>
+      <CssBaseline />
+      <GlobalStyles styles={{ html: { WebkitFontSmoothing: "auto" } }} />
+      <RefineSnackbarProvider>
+        <Refine
+          dataProvider={dataProvider("https://api.fake-rest.refine.dev")}
+          notificationProvider={notificationProvider}
+          ReadyPage={ReadyPage}
+          catchAll={<ErrorComponent />}
+          resources={[
+            {
+              name: "cards",
+              list: MyVCards,
+              create: GenerateVCard,
+              icon: <RecentActorsOutlined />,
+            },
+          ]}
+          Title={Title}
+          Sider={Sider}
+          Layout={Layout}
+          Header={Header}
+          legacyRouterProvider={{
+            ...routerProvider,
+            routes: [
               {
-                name: "cards",
-                list: MyVCards,
-                create: GenerateVCard,
-                icon: <RecentActorsOutlined />,
+                path: "/p/:id",
+                element: <CardProfile />,
               },
-            ]}
-            Title={Title}
-            Sider={Sider}
-            Layout={Layout}
-            Header={Header}
-            routerProvider={{
-              ...routerProvider,
-              routes: [
-                {
-                  path: "/p/:id",
-                  element: <CardProfile />,
-                },
-              ],
-            }}
-            authProvider={authProvider}
-            LoginPage={Login}
-          />
-        </RefineSnackbarProvider>
-      </ColorModeContextProvider>
-    </>
-  );
+            ],
+          }}
+          legacyAuthProvider={authProvider}
+          LoginPage={Login}
+        />
+      </RefineSnackbarProvider>
+    </ColorModeContextProvider>
+  </>;
 }
 
 export default App;

@@ -1,8 +1,8 @@
 import React from "react";
-import { Typography, Box, Stack, Button } from "@pankod/refine-mui";
+import { Typography, Box, Stack, Button } from "@mui/material";
 import { CustomButton } from "components";
 import { AddOutlined } from "@mui/icons-material";
-import { useNavigate } from "@pankod/refine-react-router-v6";
+import { useNavigate } from "react-router-dom";
 
 const MyVCards = () => {
   const navigate = useNavigate();

@@ -6,7 +6,7 @@ import App from "./App";
 
 const container = document.getElementById("root") as HTMLElement;
 const root = createRoot(container);
-import { StyledEngineProvider } from "@pankod/refine-mui";
+import { StyledEngineProvider } from "@mui/material";
 
 import "./index.css";
 

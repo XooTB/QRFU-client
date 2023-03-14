@@ -8,7 +8,7 @@ import {
   FormControl,
   Select,
   MenuItem,
-} from "@pankod/refine-mui";
+} from "@mui/material";
 
 const CreateCardForm = ({}) => {
   return (

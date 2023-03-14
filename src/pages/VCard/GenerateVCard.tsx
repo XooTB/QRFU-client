@@ -1,6 +1,6 @@
 import React from "react";
-import { Typography } from "@pankod/refine-mui";
-import { useForm } from "@pankod/refine-react-hook-form";
+import { Typography } from "@mui/material";
+import { useForm } from "@refinedev/react-hook-form";
 
 const GenerateVCard = () => {
   const {

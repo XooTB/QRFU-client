@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Stack, Button } from "@pankod/refine-mui";
+import { Box, Stack, Button } from "@mui/material";
 import { buttonProps } from "interfaces/common";
 
 const CustomButton = ({ type, text, handleClick, icon }: buttonProps) => {
