@@ -6,10 +6,15 @@ import App from "./App";
 
 const container = document.getElementById("root") as HTMLElement;
 const root = createRoot(container);
+import { StyledEngineProvider } from "@pankod/refine-mui";
+
+import "./index.css";
 
 root.render(
   <React.StrictMode>
-    <App />
+    <StyledEngineProvider injectFirst>
+      <App />
+    </StyledEngineProvider>
   </React.StrictMode>
 );
 

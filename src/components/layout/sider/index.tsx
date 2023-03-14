@@ -113,25 +113,14 @@ export const Sider: typeof DefaultSider = ({ render }) => {
                   sx={{
                     pl: isNested ? 4 : 2,
                     justifyContent: "center",
-                    "&.Mui-selected": {
-                      "&:hover": {
-                        backgroundColor: "transparent",
-                      },
-                      backgroundColor: "transparent",
-                    },
                   }}
                 >
-                  <ListItemIcon
-                    sx={{
-                      justifyContent: "center",
-                      minWidth: 36,
-                      color: "primary.contrastText",
-                    }}
-                  >
+                  <ListItemIcon className="flex justify-center min-w-[36px]">
                     {icon ?? <ListOutlined />}
                   </ListItemIcon>
                   <ListItemText
                     primary={label}
+                    className="text-black"
                     primaryTypographyProps={{
                       noWrap: true,
                       fontSize: "14px",
@@ -185,17 +174,12 @@ export const Sider: typeof DefaultSider = ({ render }) => {
                 justifyContent: "center",
               }}
             >
-              <ListItemIcon
-                sx={{
-                  justifyContent: "center",
-                  minWidth: 36,
-                  color: "primary.contrastText",
-                }}
-              >
+              <ListItemIcon className="flex justify-center min-w-[36px] text-black">
                 {icon ?? <ListOutlined />}
               </ListItemIcon>
               <ListItemText
                 primary={label}
+                className="text-black"
                 primaryTypographyProps={{
                   noWrap: true,
                   fontSize: "14px",
@@ -236,13 +220,7 @@ export const Sider: typeof DefaultSider = ({ render }) => {
             justifyContent: "center",
           }}
         >
-          <ListItemIcon
-            sx={{
-              justifyContent: "center",
-              minWidth: 36,
-              color: "primary.contrastText",
-            }}
-          >
+          <ListItemIcon className="flex justify-center text-black font-sans">
             <Dashboard />
           </ListItemIcon>
           <ListItemText
@@ -258,6 +236,8 @@ export const Sider: typeof DefaultSider = ({ render }) => {
     </CanAccess>
   ) : null;
 
+  // Logout Section
+
   const logout = isExistAuthentication && (
     <Tooltip
       title={t("buttons.logout", "Logout")}
@@ -268,19 +248,14 @@ export const Sider: typeof DefaultSider = ({ render }) => {
       <ListItemButton
         key="logout"
         onClick={() => mutateLogout()}
-        sx={{ justifyContent: "center" }}
+        className="flex justify-center"
       >
-        <ListItemIcon
-          sx={{
-            justifyContent: "center",
-            minWidth: 36,
-            color: "primary.contrastText",
-          }}
-        >
+        <ListItemIcon className="flex justify-center min-w-[36px]">
           <Logout />
         </ListItemIcon>
         <ListItemText
           primary={t("buttons.logout", "Logout")}
+          className="text-black font-sans"
           primaryTypographyProps={{
             noWrap: true,
             fontSize: "14px",
@@ -344,22 +319,15 @@ export const Sider: typeof DefaultSider = ({ render }) => {
           ModalProps={{
             keepMounted: true, // Better open performance on mobile.
           }}
+          className="bg-white"
           sx={{
             display: { sm: "block", md: "none" },
             "& .MuiDrawer-paper": {
               width: 256,
-              bgcolor: "secondary.main",
             },
           }}
         >
-          <Box
-            sx={{
-              height: 64,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
+          <Box className="h-16 flex items-center justify-center">
             <RenderToTitle collapsed={false} />
           </Box>
           {drawer}
@@ -367,44 +335,25 @@ export const Sider: typeof DefaultSider = ({ render }) => {
         <Drawer
           variant="permanent"
           PaperProps={{ elevation: 1 }}
+          className="bg-white"
           sx={{
             display: { xs: "none", md: "block" },
             "& .MuiDrawer-paper": {
               width: drawerWidth,
-              bgcolor: "secondary.main",
               overflow: "hidden",
               transition: "width 200ms cubic-bezier(0.4, 0, 0.6, 1) 0ms",
             },
           }}
           open
         >
-          <Box
-            sx={{
-              height: 64,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
+          <Box className="h-16 flex items-center justify-center">
             <RenderToTitle collapsed={collapsed} />
           </Box>
-          <Box
-            sx={{
-              flexGrow: 1,
-              overflowX: "hidden",
-              overflowY: "auto",
-            }}
-          >
+          <Box className="flex-grow overflow-x-hidden overflow-y-auto">
             {drawer}
           </Box>
           <Button
-            sx={{
-              background: "rgba(0,0,0,.5)",
-              color: "primary.contrastText",
-              textAlign: "center",
-              borderRadius: 0,
-              borderTop: "1px solid #ffffff1a",
-            }}
+            className="bg-blue text-white text-center rounded-none border-t-2 border-white hover:bg-gray hover:text-black"
             fullWidth
             size="large"
             onClick={() => setCollapsed((prev) => !prev)}
@@ -425,7 +374,7 @@ export const Sider: typeof DefaultSider = ({ render }) => {
           }}
         >
           <IconButton
-            sx={{ color: "#fff", width: "36px" }}
+            className="text-white w-9"
             onClick={() => setOpened((prev) => !prev)}
           >
             <MenuRounded />
