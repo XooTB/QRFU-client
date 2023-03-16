@@ -2,14 +2,15 @@ import React from "react";
 import { Typography, Box, Stack, Button } from "@mui/material";
 import { CustomButton } from "components";
 import { AddOutlined } from "@mui/icons-material";
-import { useNavigate } from "react-router-dom";
+import { useNavigation } from "@refinedev/core";
 
 const MyVCards = () => {
-  const navigate = useNavigate();
+  const { create } = useNavigation();
 
   const handleCreate = () => {
-    navigate("/cards/create");
+    create("cards");
   };
+
   return (
     <div className="w-full">
       <Box className="w-full h-20 flex justify-between">
