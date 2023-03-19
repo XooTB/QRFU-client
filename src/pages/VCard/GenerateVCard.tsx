@@ -1,14 +1,69 @@
-import React from "react";
+import React, { useState } from "react";
 import { Typography } from "@mui/material";
 import { useForm } from "@refinedev/react-hook-form";
+import { FieldValues } from "react-hook-form";
 import { CreateCardForm } from "components";
+import { useGetIdentity } from "@refinedev/core";
+import { ConstructionOutlined } from "@mui/icons-material";
 
 const GenerateVCard = () => {
+  const { data: user } = useGetIdentity<{
+    id: number;
+    fullName: string;
+    email: string;
+    name: string;
+  }>();
+
+  const [profileImage, setProfileImage] = useState({ name: "", url: "" });
+  const [socialLinks, setSocialLinks] = useState([]);
+
   const {
     refineCore: { onFinish, formLoading },
     register,
     handleSubmit,
-  } = useForm();
+  } = useForm({
+    refineCoreProps: {
+      action: "create",
+    },
+  });
+
+  const handleImageChange = (file: File) => {
+    const reader = (readFile: File) =>
+      new Promise<string>((resolve, reject) => {
+        const fileReader = new FileReader();
+        fileReader.onload = () => resolve(fileReader.result as string);
+        fileReader.readAsDataURL(readFile);
+      });
+
+    reader(file).then((result: string) => {
+      setProfileImage({ name: file?.name, url: result });
+    });
+  };
+
+  const onSubmitHandler = async (data: FieldValues) => {
+    if (!profileImage.name) return alert("Please select a profile image");
+
+    console.log({
+      ...data,
+      profileImage: profileImage.url,
+      user: {
+        email: user?.email,
+        name: user?.name,
+      },
+      socialLinks,
+    });
+
+    await onFinish({
+      ...data,
+      profileImage: profileImage.url,
+      user: {
+        email: user?.email,
+        name: user?.name,
+      },
+      socialLinks,
+    });
+  };
+
   return (
     <div className="w-full">
       <Typography className="text-3xl font-bold text-black">
@@ -19,7 +74,18 @@ const GenerateVCard = () => {
           <Typography className="text-3xl font-bold text-black p-5">
             V Card Info
           </Typography>
-          {<CreateCardForm />}
+          {
+            <CreateCardForm
+              register={register}
+              onFinish={onFinish}
+              formLoading={formLoading}
+              handleSubmit={handleSubmit}
+              onSubmitHandler={onSubmitHandler}
+              handleImageChange={handleImageChange}
+              socialLinks={socialLinks}
+              setSocialLinks={setSocialLinks}
+            />
+          }
         </div>
         <div className="flex flex-col w-2/5 bg-white rounded-2xl">
           <Typography className="text-2xl font-semibold text-black">

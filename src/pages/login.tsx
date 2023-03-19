@@ -1,13 +1,11 @@
-import { useEffect, useRef } from "react";
 import { useLogin } from "@refinedev/core";
-import { Container, Box } from "@mui/material";
-
+import { useEffect, useRef } from "react";
 import { CredentialResponse } from "../interfaces/google";
 
+const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+
 export const Login: React.FC = () => {
-  const { mutate: login } = useLogin<CredentialResponse>({
-    v3LegacyAuthProviderCompatible: true
-  });
+  const { mutate: login } = useLogin<CredentialResponse>();
 
   const GoogleButton = (): JSX.Element => {
     const divRef = useRef<HTMLDivElement>(null);
@@ -20,7 +18,7 @@ export const Login: React.FC = () => {
       try {
         window.google.accounts.id.initialize({
           ux_mode: "popup",
-          client_id: import.meta.env.VITE_GOOGLE_AUTH_CLIENT_ID,
+          client_id: GOOGLE_CLIENT_ID,
           callback: async (res: CredentialResponse) => {
             if (res.credential) {
               login(res);
@@ -35,45 +33,21 @@ export const Login: React.FC = () => {
       } catch (error) {
         console.log(error);
       }
-    }, []); // you can also add your client id as dependency here
+    }, []);
 
     return <div ref={divRef} />;
   };
 
   return (
-    <Box
-      component="div"
-      sx={{
-        background: `radial-gradient(50% 50% at 50% 50%, #63386A 0%, #310438 100%)`,
-        backgroundSize: "cover",
+    <div
+      style={{
+        height: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
       }}
     >
-      <Container
-        component="main"
-        maxWidth="xs"
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          height: "100vh",
-        }}
-      >
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <div>
-            <img src="./refine.svg" alt="Refine Logo" />
-          </div>
-          <Box mt={4}>
-            <GoogleButton />
-          </Box>
-        </Box>
-      </Container>
-    </Box>
+      <GoogleButton />
+    </div>
   );
 };

@@ -14,11 +14,18 @@ import {
 import { CropOriginal, Add } from "@mui/icons-material";
 import { SocialLinkForm, CustomButton, SocialLink } from "components";
 import { socialLinkProps } from "interfaces/common";
+import { vCardFormProps } from "interfaces/form";
 
-const CreateCardForm = ({}) => {
-  const [socialLinks, setSocialLinks] = useState([]);
-
-  const handleImageChange = () => {};
+const CreateCardForm = ({
+  register,
+  onFinish,
+  formLoading,
+  handleSubmit,
+  handleImageChange,
+  socialLinks,
+  setSocialLinks,
+  onSubmitHandler,
+}: vCardFormProps) => {
   const handleDelete = (url: string) => {
     setSocialLinks(
       socialLinks.filter((link: socialLinkProps) => link.url !== url)
@@ -27,13 +34,14 @@ const CreateCardForm = ({}) => {
 
   return (
     <div className="w-full">
-      <form>
+      <form onSubmit={handleSubmit(onSubmitHandler)}>
         <div>
           <FormControl className="w-full p-6">
             <TextField
               id="standard-basic"
               label="Your Name"
               variant="outlined"
+              {...register("name", { required: true })}
               fullWidth
               required
             />
@@ -57,7 +65,10 @@ const CreateCardForm = ({}) => {
                 type="file"
                 accept="image/*"
                 hidden
-                onChange={handleImageChange}
+                onChange={(e) => {
+                  // @ts-ignore
+                  handleImageChange(e.target.files[0]);
+                }}
               />
             </Button>
           </FormControl>
@@ -79,6 +90,7 @@ const CreateCardForm = ({}) => {
               sx={{
                 width: "40%",
               }}
+              {...register("phone_number", { required: true })}
             />
           </FormControl>
           <FormControl className="flex flex-row mt-5 gap-5 ml-5 items-center">
@@ -90,6 +102,7 @@ const CreateCardForm = ({}) => {
               label="Email"
               type="email"
               variant="outlined"
+              {...register("email", { required: true })}
               sx={{
                 width: "40%",
               }}
@@ -104,6 +117,7 @@ const CreateCardForm = ({}) => {
               label="Website"
               type="website"
               variant="outlined"
+              {...register("website", { required: false })}
               sx={{
                 width: "40%",
               }}
@@ -123,6 +137,7 @@ const CreateCardForm = ({}) => {
               label="Address"
               type="text"
               variant="outlined"
+              {...register("address", { required: true })}
               fullWidth
               required
             />
@@ -141,6 +156,7 @@ const CreateCardForm = ({}) => {
               label="Company"
               type="text"
               variant="outlined"
+              {...register("company", { required: true })}
               required
             />
           </FormControl>
@@ -153,6 +169,7 @@ const CreateCardForm = ({}) => {
               label="Position"
               type="text"
               variant="outlined"
+              {...register("position", { required: true })}
               required
             />
           </FormControl>
@@ -165,6 +182,7 @@ const CreateCardForm = ({}) => {
               minRows={5}
               className="border-2 border-black border-solid rounded-xl p-4"
               placeholder="Enter a short and concise summary"
+              {...register("summary", { required: true })}
             />
           </FormControl>
         </div>
@@ -195,7 +213,7 @@ const CreateCardForm = ({}) => {
         <div className="flex justify-center w-full">
           <CustomButton
             type="submit"
-            text="submit"
+            text={formLoading ? "submitting" : "submit"}
             handleClick={() => {}}
             icon=""
             className=" w-3/4 py-7 p-10 mb-10 mt-12"
