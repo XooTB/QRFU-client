@@ -1,20 +1,34 @@
 import React from "react";
-import { useRouterContext, TitleProps } from "@refinedev/core";
+import {
+  useRouterContext,
+  TitleProps,
+  useLink,
+  useRouterType,
+} from "@refinedev/core";
 import { Button } from "@mui/material";
-import { logo, qrfu } from "assets";
+import { qrfu, logo } from "assets";
 
 export const Title: React.FC<TitleProps> = ({ collapsed }) => {
-  const { Link } = useRouterContext();
+  const routerType = useRouterType();
+  const Link = useLink();
+  const { Link: LegacyLink } = useRouterContext();
+
+  const ActiveLink = routerType === "legacy" ? LegacyLink : Link;
 
   return (
     <Button fullWidth variant="text" disableRipple>
-      <Link to="/">
+      <ActiveLink to="/">
         {collapsed ? (
-          <img src={logo} alt="logo" width="34px" />
+          <img
+            src={logo}
+            alt="Refine"
+            width="48px"
+            style={{ maxHeight: "38px" }}
+          />
         ) : (
-          <img src={qrfu} alt="logo" width="140px" />
+          <img src={qrfu} alt="Refine" width="140px" />
         )}
-      </Link>
+      </ActiveLink>
     </Button>
   );
 };

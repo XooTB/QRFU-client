@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ReactEventHandler, useState } from "react";
 import {
   Box,
   Stack,
@@ -15,6 +15,8 @@ import { CropOriginal, Add } from "@mui/icons-material";
 import { SocialLinkForm, CustomButton, SocialLink } from "components";
 import { socialLinkProps } from "interfaces/common";
 import { vCardFormProps } from "interfaces/form";
+import { formPreviewAtom } from "atoms/formAtom";
+import { useAtom } from "jotai";
 
 const CreateCardForm = ({
   register,
@@ -26,11 +28,26 @@ const CreateCardForm = ({
   setSocialLinks,
   onSubmitHandler,
 }: vCardFormProps) => {
+  const [formPreviewData, setFormPreviewData] = useAtom(formPreviewAtom);
+
   const handleDelete = (url: string) => {
     setSocialLinks(
       socialLinks.filter((link: socialLinkProps) => link.url !== url)
     );
   };
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
+    propertyName: string
+  ) => {
+    const newFormData = { ...formPreviewData };
+    //@ts-ignore
+    newFormData[propertyName] = e.target.value;
+
+    setFormPreviewData(newFormData);
+  };
+
+  console.log(formPreviewData);
 
   return (
     <div className="w-full">
@@ -42,6 +59,7 @@ const CreateCardForm = ({
               label="Your Name"
               variant="outlined"
               {...register("name", { required: true })}
+              onChange={(e) => handleChange(e, "name")}
               fullWidth
               required
             />
@@ -91,6 +109,7 @@ const CreateCardForm = ({
                 width: "40%",
               }}
               {...register("phone_number", { required: true })}
+              onChange={(e) => handleChange(e, "phone_number")}
             />
           </FormControl>
           <FormControl className="flex flex-row mt-5 gap-5 ml-5 items-center">
@@ -106,6 +125,7 @@ const CreateCardForm = ({
               sx={{
                 width: "40%",
               }}
+              onChange={(e) => handleChange(e, "email")}
             />
           </FormControl>
           <FormControl className="flex flex-row mt-5 gap-5 ml-5 items-center">
@@ -121,6 +141,7 @@ const CreateCardForm = ({
               sx={{
                 width: "40%",
               }}
+              onChange={(e) => handleChange(e, "website")}
             />
           </FormControl>
         </div>
@@ -138,6 +159,7 @@ const CreateCardForm = ({
               type="text"
               variant="outlined"
               {...register("address", { required: true })}
+              onChange={(e) => handleChange(e, "address")}
               fullWidth
               required
             />
@@ -157,6 +179,7 @@ const CreateCardForm = ({
               type="text"
               variant="outlined"
               {...register("company", { required: true })}
+              onChange={(e) => handleChange(e, "company")}
               required
             />
           </FormControl>
@@ -170,6 +193,7 @@ const CreateCardForm = ({
               type="text"
               variant="outlined"
               {...register("position", { required: true })}
+              onChange={(e) => handleChange(e, "position")}
               required
             />
           </FormControl>
@@ -183,6 +207,7 @@ const CreateCardForm = ({
               className="border-2 border-black border-solid rounded-xl p-4"
               placeholder="Enter a short and concise summary"
               {...register("summary", { required: true })}
+              onChange={(e) => handleChange(e, "summary")}
             />
           </FormControl>
         </div>

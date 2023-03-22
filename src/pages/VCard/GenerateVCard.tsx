@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { ReactEventHandler, useState } from "react";
 import { Typography } from "@mui/material";
 import { useForm } from "@refinedev/react-hook-form";
 import { FieldValues } from "react-hook-form";
-import { CreateCardForm } from "components";
+import { CreateCardForm, CardPreview } from "components";
 import { useGetIdentity } from "@refinedev/core";
 import { ConstructionOutlined } from "@mui/icons-material";
+import { useAtom } from "jotai";
+import { formPreviewAtom } from "atoms/formAtom";
 
 const GenerateVCard = () => {
+  const [formPreviewData, setFormPreviewData] = useAtom(formPreviewAtom);
   const { data: user } = useGetIdentity<{
     id: number;
     fullName: string;
@@ -36,6 +39,9 @@ const GenerateVCard = () => {
       });
 
     reader(file).then((result: string) => {
+      const newFormPrevieData = { ...formPreviewData };
+      newFormPrevieData.profileImage = result;
+      setFormPreviewData(newFormPrevieData);
       setProfileImage({ name: file?.name, url: result });
     });
   };
@@ -88,9 +94,12 @@ const GenerateVCard = () => {
           }
         </div>
         <div className="flex flex-col w-2/5 bg-white rounded-2xl">
-          <Typography className="text-2xl font-semibold text-black">
+          <Typography className="text-2xl font-semibold text-black text-center pt-5 capitalize">
             Preview
           </Typography>
+          <div>
+            <CardPreview />
+          </div>
         </div>
       </div>
     </div>

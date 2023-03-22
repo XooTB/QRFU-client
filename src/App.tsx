@@ -2,23 +2,21 @@ import { Refine, Authenticated } from "@refinedev/core";
 import {
   notificationProvider,
   RefineSnackbarProvider,
-  ReadyPage,
   ErrorComponent,
+  Layout,
 } from "@refinedev/mui";
 import { CssBaseline, GlobalStyles } from "@mui/material";
 import dataProvider from "@refinedev/simple-rest";
-import routerProvider from "@refinedev/react-router-v6/legacy";
 import axios, { AxiosRequestConfig } from "axios";
 import { ColorModeContextProvider, authProvider } from "contexts";
-import { Title, Sider, Header } from "components/layout";
-import { Layout } from "@refinedev/mui";
-import { Login, CardProfile, MyVCards, GenerateVCard } from "pages";
-import { RecentActorsOutlined } from "@mui/icons-material";
+import { RecentActorsOutlined, AccountCircle } from "@mui/icons-material";
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 import routerBindings, {
   CatchAllNavigate,
   NavigateToResource,
 } from "@refinedev/react-router-v6";
+import { Login, CardProfile, MyVCards, GenerateVCard, Profile } from "pages";
+import { Title, Header, CustomSider } from "components";
 
 const axiosInstance = axios.create();
 axiosInstance.interceptors.request.use((request: AxiosRequestConfig) => {
@@ -55,33 +53,22 @@ function App() {
                   edit: "/cards/edit/:id",
                   icon: <RecentActorsOutlined />,
                 },
+                {
+                  name: "profile",
+                  list: "/profile",
+                  icon: <AccountCircle />,
+                },
               ]}
               options={{
                 syncWithLocation: true,
                 warnWhenUnsavedChanges: true,
               }}
-              // ReadyPage={ReadyPage}
-              // catchAll={<ErrorComponent />}
-              // Title={Title}
-              // Sider={Sider}
-              // Layout={Layout}
-              // Header={Header}
-              // legacyRouterProvider={{
-              //   ...routerProvider,
-              //   routes: [
-              //     {
-              //       path: "/p/:id",
-              //       element: <CardProfile />,
-              //     },
-              //   ],
-              // }}
-              // LoginPage={Login}
             >
               <Routes>
                 <Route
                   element={
                     <Authenticated fallback={<CatchAllNavigate to="/login" />}>
-                      <Layout Header={Header}>
+                      <Layout Header={Header} Sider={CustomSider} Title={Title}>
                         <Outlet />
                       </Layout>
                     </Authenticated>
@@ -94,6 +81,9 @@ function App() {
                   <Route path="/cards">
                     <Route index element={<MyVCards />} />
                     <Route path="create" element={<GenerateVCard />} />
+                  </Route>
+                  <Route path="/profile">
+                    <Route index element={<Profile />} />
                   </Route>
                 </Route>
                 <Route
@@ -115,6 +105,9 @@ function App() {
                   }
                 >
                   <Route path="*" element={<ErrorComponent />} />
+                </Route>
+                <Route>
+                  <Route path="/p/:id" element={<CardProfile />} />
                 </Route>
               </Routes>
             </Refine>

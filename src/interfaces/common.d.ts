@@ -19,3 +19,18 @@ export interface socialLinkProps {
   url: string;
   handleDelete: (url: string) => void;
 }
+
+export interface customIconButtonProps {
+  icon: ReactComponentElement;
+  text: string;
+  bg?: string;
+  type: string;
+  info: string;
+}
+
+export interface infoCardProps {
+  icon: ReactComponentElement;
+  info: string;
+  text?: string;
+  className?: string;
+}
