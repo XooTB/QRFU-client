@@ -34,3 +34,10 @@ export interface infoCardProps {
   text?: string;
   className?: string;
 }
+
+export interface cardOverviewProps {
+  cardInfo: {
+    cardName: string;
+    url: string;
+  };
+}

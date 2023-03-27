@@ -10,6 +10,7 @@ import { formPreviewAtom } from "atoms/formAtom";
 
 const GenerateVCard = () => {
   const [formPreviewData, setFormPreviewData] = useAtom(formPreviewAtom);
+
   const { data: user } = useGetIdentity<{
     id: number;
     fullName: string;
@@ -98,7 +99,7 @@ const GenerateVCard = () => {
             Preview
           </Typography>
           <div>
-            <CardPreview />
+            <CardPreview formPreviewData={formPreviewData} />
           </div>
         </div>
       </div>

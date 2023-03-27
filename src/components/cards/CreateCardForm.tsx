@@ -47,13 +47,27 @@ const CreateCardForm = ({
     setFormPreviewData(newFormData);
   };
 
-  console.log(formPreviewData);
-
   return (
     <div className="w-full">
       <form onSubmit={handleSubmit(onSubmitHandler)}>
         <div>
           <FormControl className="w-full p-6">
+            <Typography className="text-base font-semibold text-black pb-5">
+              Card Name
+            </Typography>
+            <TextField
+              id="standard-basic"
+              label="Give the Card a name"
+              variant="outlined"
+              {...register("cardName", { required: true })}
+              fullWidth
+              required
+            />
+          </FormControl>
+          <FormControl className="w-full p-6">
+            <Typography className="text-base font-semibold text-black pb-5">
+              Your Name
+            </Typography>
             <TextField
               id="standard-basic"
               label="Your Name"

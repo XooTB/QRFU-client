@@ -17,3 +17,21 @@ export const formPreviewAtom = atom({
   summary: "",
   website: "",
 });
+
+export const editFormPreviewAtom = atom({
+  name: "",
+  email: "",
+  phone_number: "",
+  address: "",
+  company: "",
+  position: "",
+  profileImage: "",
+  socialLinks: [
+    {
+      platform: "",
+      url: "",
+    },
+  ],
+  summary: "",
+  website: "",
+});

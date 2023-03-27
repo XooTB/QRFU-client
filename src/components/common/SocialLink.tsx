@@ -25,7 +25,9 @@ const SocialLink = ({ platform, url, handleDelete }: socialLinkProps) => {
   return (
     <div className="flex flex-row ml-10 flex-1 items-center">
       <Typography className="m-5">{platformIcons[platform]}</Typography>
-      <Typography className="m-5 w-60 text-black">{url}</Typography>
+      <Typography className="m-5 w-60 text-black overflow-hidden">
+        {url}
+      </Typography>
       <CustomButton
         type="delete"
         text="remove"

@@ -15,7 +15,14 @@ import routerBindings, {
   CatchAllNavigate,
   NavigateToResource,
 } from "@refinedev/react-router-v6";
-import { Login, CardProfile, MyVCards, GenerateVCard, Profile } from "pages";
+import {
+  Login,
+  CardProfile,
+  MyVCards,
+  GenerateVCard,
+  Profile,
+  EditVCard,
+} from "pages";
 import { Title, Header, CustomSider } from "components";
 
 const axiosInstance = axios.create();
@@ -81,6 +88,7 @@ function App() {
                   <Route path="/cards">
                     <Route index element={<MyVCards />} />
                     <Route path="create" element={<GenerateVCard />} />
+                    <Route path="edit/:id" element={<EditVCard />} />
                   </Route>
                   <Route path="/profile">
                     <Route index element={<Profile />} />

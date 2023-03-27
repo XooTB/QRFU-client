@@ -13,9 +13,9 @@ import {
   Language,
   Work,
 } from "@mui/icons-material";
+import { formPreviewProps } from "interfaces/form";
 
-const CardPreview = () => {
-  const [formPreviewData, setFormPreviewData] = useAtom(formPreviewAtom);
+const CardPreview = ({ formPreviewData }: formPreviewProps) => {
   const cardInfo = formPreviewData;
 
   return (
