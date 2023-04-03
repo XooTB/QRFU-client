@@ -41,3 +41,8 @@ export interface cardOverviewProps {
     url: string;
   };
 }
+
+export interface iconLinkProps {
+  platform: string;
+  url: string;
+}

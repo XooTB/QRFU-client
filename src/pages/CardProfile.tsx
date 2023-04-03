@@ -1,6 +1,6 @@
 import React from "react";
 import { Typography } from "@mui/material";
-import { vCardinfo as cardInfo } from "constants/vCardInfo";
+// import { vCardinfo as cardInfo } from "constants/vCardInfo";
 import { CustomIconButton, InfoCard } from "components";
 import {
   Call,
@@ -9,15 +9,36 @@ import {
   Work,
   Language,
 } from "@mui/icons-material";
+import { useOne } from "@refinedev/core";
+import { useParams } from "react-router-dom";
+import IconLink from "components/common/IconLink";
+import { iconLinkProps } from "interfaces/common";
 
 const CardProfile = () => {
+  const { id } = useParams();
+
+  const { data, isLoading, isError } = useOne({
+    resource: "cards",
+    id,
+  });
+
+  if (isLoading) {
+    return <div>Loading......</div>;
+  }
+  if (isError) {
+    return <div>Error....</div>;
+  }
+
+  const cardInfo = data?.data;
+  console.log(cardInfo);
+
   return (
     <div className="w-full bg-white">
       <div className="w-full bg-green h-auto flex flex-col items-center">
         <img
           src={cardInfo.profileImage}
           alt="profile_image"
-          className="h-36 w-36 rounded-full p-5 mt-5"
+          className="h-48 w-44 rounded-full p-5 mt-5"
         />
         <Typography className="text-3xl text-white font-semibold p-5 pb-2">
           {cardInfo.name}
@@ -78,6 +99,16 @@ const CardProfile = () => {
             info={cardInfo.company}
             text={cardInfo.position}
           />
+        </div>
+        <div className="w-full flex items-center flex-col">
+          <Typography className="text-2xl font-medium py-5">
+            Find me at:
+          </Typography>
+          <div className="pb-10">
+            {cardInfo.socialLinks.map((link: iconLinkProps) => (
+              <IconLink platform={link.platform} url={link.url} />
+            ))}
+          </div>
         </div>
       </div>
     </div>
